@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>iPointe</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<link href="css/styles.css" rel="stylesheet">
+
+<script src="js/scripts.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/database.js"></script>
+
+</head>
+<body>
+	<div data-role="page" data-control-title="Accueil" id="page1">
+		<div data-role="panel" id="panel3" data-position="left"
+			data-display="reveal" data-theme="a">
+			<ul data-role="listview" data-divider-theme="h" data-inset="false">
+				<li data-role="list-divider" role="heading">Menu</li>
+				<li data-theme="a"><a href="#page1" data-transition="slide">
+						Accueil </a></li>
+				<li data-theme="a"><a href="#page3" data-transition="slide">
+						Connexion </a></li>
+				<li data-theme="a"><a href="#page4" data-transition="pop">
+						Aide </a></li>
+			</ul>
+		</div>
+		<div data-theme="a" data-role="header">
+			<a data-controltype="panelbutton" data-role="button" href="#panel3"
+				data-icon="grid" data-iconpos="notext" class="ui-btn-left"> </a>
+			<h4>iPointe!</h4>
+		</div>
+		<div data-role="content">
+			<h3>MQL - Service de Pointage</h3>
+			<hr
+				style="height: 3px; background-color: #ccc; border: 0; margin-top: 12px; margin-bottom: 12px;">
+			<div id="googlemapsjs2" class="google-map"
+				style="width: 288px; height: 200px; margin-left: auto; margin-right: auto">
+			</div>
+
+					
+
+<script type="text/javascript" >
+// Note: This example requires that you consent to location sharing when
+// prompted by your browser. If you see a blank space instead of the map, this
+// is probably because you have denied permission for location sharing.
+
+var map;
+
+function initialize() {
+  var mapOptions = {
+    zoom: 6
+  };
+  map = new google.maps.Map(document.getElementById('googlemapsjs2'),
+      mapOptions);
+
+  // Try HTML5 geolocation
+  if(navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var pos = new google.maps.LatLng(position.coords.latitude,
+                                       position.coords.longitude);
+
+      var infowindow = new google.maps.InfoWindow({
+        map: map,
+        position: pos,
+        content: 'Location found using HTML5.'
+      });
+
+      map.setCenter(pos);
+    }, function() {
+      handleNoGeolocation(true);
+    });
+  } else {
+    // Browser doesn't support Geolocation
+    handleNoGeolocation(false);
+  }
+}
+
+function handleNoGeolocation(errorFlag) {
+  if (errorFlag) {
+    var content = 'Error: The Geolocation service failed.';
+  } else {
+    var content = 'Error: Your browser doesn\'t support geolocation.';
+  }
+
+  var options = {
+    map: map,
+    position: new google.maps.LatLng(60, 105),
+    content: content
+  };
+
+  var infowindow = new google.maps.InfoWindow(options);
+  map.setCenter(options.position);
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+
+
+			<hr
+				style="height: 3px; background-color: #ccc; border: 0; margin-top: 12px; margin-bottom: 12px;">
+			<div data-role="collapsible-set">
+				<div data-role="collapsible">
+					<h3>Via ID</h3>
+					<div data-role="fieldcontain" data-controltype="textinput">
+						<input name="" id="textinput1"
+							placeholder="Saisir votre matricule" value="" type="text"
+							data-mini="true">
+					</div>
+					<div data-role="fieldcontain" data-controltype="dateinput">
+						<input name="" id="dateinput3" placeholder="Heure de Pointage"
+							value="" type="datetime-l">
+					</div>
+				</div>
+				<div data-role="collapsible">
+					<h3>QRCode</h3>
+				</div>
+				<div data-role="collapsible" data-collapsed="false">
+					<h3>Face Recognition</h3>
+				</div>
+			</div>
+			<div data-controltype="textblock">
+				<br>
+			</div>
+		</div>
+	</div>
+	<div data-role="page" data-control-title="Auth." id="page3">
+		<div data-theme="a" data-role="header">
+			<h3>iPointe!</h3>
+			<a data-role="button" data-rel="back" href="#page1" data-icon="back"
+				data-iconpos="notext" class="ui-btn-right"> </a>
+		</div>
+		<div data-role="content">
+			<h2>Authentification</h2>
+			<hr
+				style="height: 3px; background-color: #ccc; border: 0; margin-top: 12px; margin-bottom: 12px;">
+			<form action="page5" method="POST">
+				<div data-role="fieldcontain" data-controltype="textinput">
+					<input name="" id="login" placeholder="Login" value="" type="text">
+				</div>
+				<div data-role="fieldcontain" data-controltype="textinput">
+					<input name="" id="pwd" placeholder="Mot de passe" value=""
+						type="password">
+				</div>
+			</form>
+			<input type="submit" data-icon="check" data-iconpos="right"
+				value="Valider" onClick="insertData()" > <a
+				data-role="button" href="#page5" data-icon="check"
+				data-iconpos="right" > Valider </a>
+		</div>
+	</div>
+	<div data-role="page" data-control-title="Aide" id="page4">
+		<div data-theme="a" data-role="header">
+			<a data-role="button" data-inline="true" data-rel="back"
+				href="#page4" data-icon="back" data-iconpos="notext"
+				class="ui-btn-right"> </a>
+			<h3>iPointe!</h3>
+		</div>
+		<div data-role="content">
+			<iframe data-controltype="youtube" id="youtube4" type="text/html"
+				width="288px" height="216px"
+				src="https://www.youtube.com/embed/C0DPdy98e4c" frameborder="0">
+			</iframe>
+			<hr
+				style="height: 3px; background-color: #ccc; border: 0; margin-top: 12px; margin-bottom: 12px;">
+			<div>
+				<a href="www.fsk-uit.ma" data-transition="fade"> Master Qualité
+					du Logiciel </a>
+			</div>
+		</div>
+	</div>
+	<div data-role="page" data-control-title="Admin" id="page5">
+		<div data-theme="a" data-role="header">
+			<a data-role="button" data-rel="back" href="#page5" data-icon="back"
+				data-iconpos="notext" class="ui-btn-right"> </a>
+			<h3>iPointe!</h3>
+		</div>
+		<div data-role="content">
+			<div id="Ajouter " data-role="collapsible-set">
+				<div data-role="collapsible">
+					<h3>Liste des employés</h3>
+					<ul data-role="listview" data-divider-theme="b" data-inset="true">
+						<li data-theme="c"><a href="#page7" data-transition="slide">
+								Hind FLOUKI </a></li>
+						<li data-theme="c"><a href="#page7" data-transition="slide">
+								Elmahdi BENZINA </a></li>
+						<li data-theme="c"><a href="#page7" data-transition="slide">
+								Zakaria LEHLOU </a></li>
+						<li data-theme="c"><a href="#page7" data-transition="slide">
+								Mohamed ELMORABIT </a></li>
+					</ul>
+				</div>
+				<div data-role="collapsible">
+					<h3>Ajouter un nouvel employé</h3>
+					<div data-role="fieldcontain" data-controltype="textinput">
+						<input name="mtr" id="textinput12" placeholder="Matricule"
+							value="" type="text" data-mini="true">
+					</div>
+					<div data-role="fieldcontain" data-controltype="textinput">
+						<input name="nom" id="textinput14" placeholder="Nom" value=""
+							type="text" data-mini="true">
+					</div>
+					<div data-role="fieldcontain" data-controltype="textinput">
+						<input name="prenom" id="textinput15" placeholder="Prénom"
+							value="" type="text" data-mini="true">
+					</div>
+					<div data-role="fieldcontain" data-controltype="textinput">
+						<input name="email" id="textinput13"
+							placeholder="Adresse Electronique" value="" type="email"
+							data-mini="true">
+					</div>
+					<div data-role="fieldcontain" data-controltype="camerainput">
+						<input type="file" name="photo" id="camerainput1" accept="image/*"
+							capture="camera" data-mini="true">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div data-role="page" data-control-title="Ajouter" id="page6">
+		<div data-role="panel" id="panel7" data-position="left"
+			data-display="reveal" data-theme="a">
+			<ul data-role="listview" data-divider-theme="h" data-inset="false">
+				<li data-role="list-divider" role="heading">Divider</li>
+				<li data-theme="a"><a href="" data-transition="slide">
+						Button </a></li>
+			</ul>
+		</div>
+		<div data-theme="a" data-role="header">
+			<a data-role="button" data-rel="back" href="#page5" data-icon="back"
+				data-iconpos="notext" class="ui-btn-right"> </a>
+			<h3>iPointe!</h3>
+		</div>
+		<div data-role="content">
+			<h3>Ajouter un nouvel employé</h3>
+			<form action="" method="POST" enctype="multipart/form-data">
+				<div data-role="fieldcontain" data-controltype="textinput">
+					<input name="mtr" id="textinput4" placeholder="Matricule" value=""
+						type="text" data-mini="true">
+				</div>
+				<div data-role="fieldcontain" data-controltype="textinput">
+					<input name="nom" id="textinput5" placeholder="Nom" value=""
+						type="text" data-mini="true">
+				</div>
+				<div data-role="fieldcontain" data-controltype="textinput">
+					<input name="prenom" id="textinput6" placeholder="Prénom" value=""
+						type="text" data-mini="true">
+				</div>
+				<div data-role="fieldcontain" data-controltype="textinput">
+					<input name="email" id="textinput7"
+						placeholder="Adresse Electronique" value="" type="text"
+						data-mini="true">
+				</div>
+				<div data-role="fieldcontain" data-controltype="camerainput">
+					<input type="file" name="" id="camerainput3" accept="image/*"
+						capture="camera">
+				</div>
+			</form>
+			<input type="submit" data-icon="check" data-iconpos="right"
+				value="Envoyer">
+		</div>
+	</div>
+	<div data-role="page" data-control-title="Modification" id="page7">
+		<div data-role="panel" id="panel9" data-position="left"
+			data-display="reveal" data-theme="a">
+			<ul data-role="listview" data-divider-theme="h" data-inset="false">
+				<li data-role="list-divider" role="heading">Divider</li>
+				<li data-theme="a"><a href="" data-transition="slide">
+						Button </a></li>
+			</ul>
+		</div>
+		<div data-role="panel" id="panel10" data-position="left"
+			data-display="reveal" data-theme="a">
+			<ul data-role="listview" data-divider-theme="h" data-inset="false">
+				<li data-role="list-divider" role="heading">Divider</li>
+				<li data-theme="a"><a href="" data-transition="slide">
+						Button </a></li>
+			</ul>
+		</div>
+		<div data-theme="a" data-role="header">
+			<a data-role="button" data-rel="back" href="#page5" data-icon="back"
+				data-iconpos="notext" class="ui-btn-right"> </a>
+			<h3>iPointe!</h3>
+		</div>
+		<div data-role="content">
+			<h3>Modification</h3>
+			<form action="" method="POST">
+				<div data-role="fieldcontain" data-controltype="textinput">
+					<input name="mtr" id="textinput8" placeholder="Matricule" value=""
+						type="text" data-mini="true">
+				</div>
+				<div data-role="fieldcontain" data-controltype="textinput">
+					<input name="nom" id="textinput9" placeholder="Nom" value=""
+						type="text" data-mini="true">
+				</div>
+				<div data-role="fieldcontain" data-controltype="textinput">
+					<input name="prenom" id="textinput10" placeholder="Prénom" value=""
+						type="text" data-mini="true">
+				</div>
+				<div data-role="fieldcontain" data-controltype="textinput">
+					<input name="email" id="textinput11"
+						placeholder="Adresse Electronique" value="" type="text"
+						data-mini="true">
+				</div>
+				<div data-role="fieldcontain" data-controltype="camerainput">
+					<input type="file" name="" id="camerainput2" accept="image/*"
+						capture="camera">
+				</div>
+			</form>
+			<input type="submit" data-icon="check" data-iconpos="right"
+				value="Enregistrer">
+		</div>
+	</div>
+</body>
+</html>
